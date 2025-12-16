@@ -7,40 +7,47 @@ class App extends Component {
     this.state = {
       name1: "",
       name2: "",
-      flameResult: ""
+      answer: ""
     };
   }
 
-  flamesLogic = (n1, n2) => {
-    if (n1 === "" || n2 === "") {
-      return "Please Enter valid input";
+  calculate = () => {
+    const { name1, name2 } = this.state;
+
+    if (name1 === "" || name2 === "") {
+      this.setState({ answer: "Please Enter valid input" });
+      return;
     }
 
-    const flamesArr = [
-      "Siblings",
-      "Friends",
-      "Love",
-      "Affection",
-      "Marriage",
-      "Enemy"
-    ];
+    const map = {
+      0: "Siblings",
+      1: "Friends",
+      2: "Love",
+      3: "Affection",
+      4: "Marriage",
+      5: "Enemy"
+    };
 
-    let a1 = n1.split("");
-    let a2 = n2.split("");
+    let a1 = name1.split("");
+    let a2 = name2.split("");
 
     for (let i = 0; i < a1.length; i++) {
-      const index = a2.indexOf(a1[i]);
-      if (index !== -1) {
+      const idx = a2.indexOf(a1[i]);
+      if (idx !== -1) {
         a1[i] = "";
-        a2[index] = "";
+        a2[idx] = "";
       }
     }
 
-    const size =
-      a1.filter((c) => c !== "").length +
-      a2.filter((c) => c !== "").length;
+    const count =
+      a1.filter(c => c !== "").length +
+      a2.filter(c => c !== "").length;
 
-    return flamesArr[size % 6];
+    this.setState({ answer: map[count % 6] });
+  };
+
+  clear = () => {
+    this.setState({ name1: "", name2: "", answer: "" });
   };
 
   render() {
@@ -65,29 +72,20 @@ class App extends Component {
         <button
           name="calculate_relationship"
           data-testid="calculate_relationship"
-          onClick={() =>
-            this.setState({
-              flameResult: this.flamesLogic(
-                this.state.name1,
-                this.state.name2
-              )
-            })
-          }
+          onClick={this.calculate}
         >
-          calculate_relationship
+          Calculate Relationship
         </button>
 
         <button
           name="clear"
           data-testid="clear"
-          onClick={() =>
-            this.setState({ name1: "", name2: "", flameResult: "" })
-          }
+          onClick={this.clear}
         >
-          clear
+          Clear
         </button>
 
-        <h3 data-testid="answer">{this.state.flameResult}</h3>
+        <h3 data-testid="answer">{this.state.answer}</h3>
       </div>
     );
   }
