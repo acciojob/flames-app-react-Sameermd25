@@ -17,12 +17,12 @@ class App extends Component {
     }
 
     const flamesArr = [
-      "Siblings",   // 0
-      "Friends",    // 1
-      "Love",       // 2
-      "Affection",  // 3
-      "Marriage",   // 4
-      "Enemy"       // 5
+      "Siblings",
+      "Friends",
+      "Love",
+      "Affection",
+      "Marriage",
+      "Enemy"
     ];
 
     let a1 = n1.split("");
